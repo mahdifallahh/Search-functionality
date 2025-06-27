@@ -1,0 +1,123 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Search Functionality API",
+    "version": "1.0.0",
+    "description": "API documentation for Search Functionality project"
+  },
+  "servers": [
+    { "url": "http://localhost:5000" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "summary": "User signup",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User created successfully" },
+          "409": { "description": "Username or email already exists" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "User login",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Invalid credentials" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "summary": "Upload an image or video file",
+        "tags": ["Upload"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "alignment": { "type": "string", "enum": ["Landscape", "Portrait", "Other"] },
+                  "resolution": { "type": "string", "enum": ["HD", "FullHD", "4K", "8K", "Other"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "File uploaded successfully" },
+          "400": { "description": "Validation or file error" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "summary": "Search uploaded files",
+        "tags": ["Search"],
+        "parameters": [
+          { "in": "query", "name": "alignment", "schema": { "type": "string", "enum": ["Landscape", "Portrait", "Other"] } },
+          { "in": "query", "name": "fileType", "schema": { "type": "string", "enum": ["image", "video"] } },
+          { "in": "query", "name": "resolution", "schema": { "type": "string", "enum": ["HD", "FullHD", "4K", "8K", "Other"] } },
+          { "in": "query", "name": "period", "schema": { "type": "string", "enum": ["1 week ago", "2 weeks ago", "1 month ago", "6 months ago", "1 year ago"] } },
+          { "in": "query", "name": "q", "schema": { "type": "string" }, "description": "Full-text search on onlineId or title" },
+          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1 } },
+          { "in": "query", "name": "pageSize", "schema": { "type": "integer", "default": 10 } },
+          { "in": "query", "name": "sortBy", "schema": { "type": "string", "enum": ["onlineId", "title", "uploadedDate"], "default": "uploadedDate" } },
+          { "in": "query", "name": "sortOrder", "schema": { "type": "string", "enum": ["asc", "desc"], "default": "desc" } }
+        ],
+        "responses": {
+          "200": { "description": "List of files" },
+          "500": { "description": "Server error" }
+        }
+      }
+    }
+  }
+}

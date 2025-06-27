@@ -1,0 +1,119 @@
+{
+  "info": {
+    "_postman_id": "b1e7e7e0-1234-4bcd-9a1a-abcdef123456",
+    "name": "Search Functionality API",
+    "description": "Postman collection for Search Functionality API with sample data.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Signup (User 1)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser1\",\n  \"email\": \"test1@example.com\",\n  \"password\": \"Test@1234\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/auth/signup", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["auth", "signup"] }
+      }
+    },
+    {
+      "name": "Signup (User 2)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser2\",\n  \"email\": \"test2@example.com\",\n  \"password\": \"Test@5678\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/auth/signup", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["auth", "signup"] }
+      }
+    },
+    {
+      "name": "Login (User 1)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test1@example.com\",\n  \"password\": \"Test@1234\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["auth", "login"] }
+      }
+    },
+    {
+      "name": "Login (User 2)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test2@example.com\",\n  \"password\": \"Test@5678\"\n}"
+        },
+        "url": { "raw": "http://localhost:5000/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["auth", "login"] }
+      }
+    },
+    {
+      "name": "Upload Sample Image (User 1)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token1}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "file", "type": "file", "src": "sample-image.jpg" },
+            { "key": "title", "value": "Sample Image", "type": "text" },
+            { "key": "description", "value": "A beautiful landscape image.", "type": "text" },
+            { "key": "alignment", "value": "Landscape", "type": "text" },
+            { "key": "resolution", "value": "HD", "type": "text" }
+          ]
+        },
+        "url": { "raw": "http://localhost:5000/upload", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["upload"] }
+      }
+    },
+    {
+      "name": "Upload Sample Video (User 2)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token2}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "file", "type": "file", "src": "sample-video.mp4" },
+            { "key": "title", "value": "Sample Video", "type": "text" },
+            { "key": "description", "value": "A short sample video.", "type": "text" },
+            { "key": "alignment", "value": "Portrait", "type": "text" },
+            { "key": "resolution", "value": "FullHD", "type": "text" }
+          ]
+        },
+        "url": { "raw": "http://localhost:5000/upload", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["upload"] }
+      }
+    },
+    {
+      "name": "Search Files",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/search?q=Sample",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["search"],
+          "query": [
+            { "key": "q", "value": "Sample" }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "token1", "value": "" },
+    { "key": "token2", "value": "" }
+  ]
+}

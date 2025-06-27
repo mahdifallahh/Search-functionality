@@ -1,0 +1,33 @@
+[
+  {
+    "username": "testuser1",
+    "email": "test1@example.com",
+    "password": "Test@1234"
+  },
+  {
+    "username": "testuser2",
+    "email": "test2@example.com",
+    "password": "Test@5678"
+  },
+  {
+    "title": "Sample Image",
+    "description": "A beautiful landscape image.",
+    "alignment": "Landscape",
+    "resolution": "HD",
+    "fileType": "image",
+    "onlineId": "img-123456",
+    "url": "/uploads/sample-image.jpg",
+    "thumbUrl": "/uploads/thumb-sample-image.jpg"
+  },
+  {
+    "title": "Sample Video",
+    "description": "A short sample video.",
+    "alignment": "Portrait",
+    "resolution": "FullHD",
+    "fileType": "video",
+    "onlineId": "vid-654321",
+    "url": "/uploads/sample-video.mp4",
+    "thumbUrl": "/uploads/thumb-sample-video.png",
+    "duration": 8
+  }
+]
