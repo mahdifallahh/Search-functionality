@@ -20,13 +20,19 @@ exports.searchFiles = async (req, res) => {
     if (fileType) filter.fileType = fileType;
     if (resolution) filter.resolution = resolution;
     if (period) {
-      const fromDate = require('../utils/period').parsePeriod(period);
-      if (fromDate) filter.uploadedDate = { $gte: fromDate };
+      const fromDate = parsePeriod(period);
+      if (fromDate) {
+        filter.uploadedDate = { $gte: fromDate };
+      }
     }
-    if (q) {
+    let searchQuery = q ? q.trim() : '';
+    if (searchQuery) {
+      // Escape regex special characters for safe partial search
+      const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const safeQuery = escapeRegex(searchQuery);
       filter.$or = [
-        { onlineId: { $regex: q, $options: 'i' } },
-        { title: { $regex: q, $options: 'i' } },
+        { onlineId: { $regex: safeQuery, $options: 'i' } },
+        { title: { $regex: safeQuery, $options: 'i' } },
       ];
     }
 
@@ -53,6 +59,7 @@ exports.searchFiles = async (req, res) => {
         resolution: f.resolution,
         fileType: f.fileType,
         uploadedDate: f.uploadedDate,
+        duration: f.duration,
       })),
     });
   } catch (err) {

@@ -18,7 +18,7 @@ exports.uploadFile = async (req, res) => {
     // Video duration check
     if (fileType === 'video') {
       duration = await getVideoDuration(file.path);
-      if (duration > 10) {
+      if (duration > 20) {
         fs.unlinkSync(file.path);
         return res.status(400).json({ message: 'Video duration exceeds 10 seconds' });
       }
